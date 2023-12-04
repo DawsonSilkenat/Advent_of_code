@@ -5,6 +5,9 @@ filename = os.getcwd() + "/2023/inputs/" + "input_3.txt"
 
 
 def get_boundrys(x, y, grid):
+    if not grid[y][x].isdigit():
+        return None
+
     left = x
     while left >= 0 and grid[y][left - 1].isdigit():
         left -= 1
@@ -12,32 +15,37 @@ def get_boundrys(x, y, grid):
     while right < len(grid[y]) - 1 and grid[y][right + 1].isdigit():
         right += 1
   
-    return left, right
+    return y, left, right
 
-def check_for_symbol(x, y, grid):
+def check_for_digit(x, y, grid):
     if y < 0 or y >= len(grid) or x < 0 or x >= len(grid[y]):
         return False
-    return not (grid[y][x].isdigit() or grid[y][x] == '.')
+    return grid[y][x].isdigit()
     
-def boarder_contains_symbol(left, right, y, grid):
+def get_gear_ratio(x, y, grid):
+    nums = []
     for i in [y - 1, y, y + 1]:
-        for j in range(left - 1, right + 2):
-            if check_for_symbol(j, i, grid):
-                return True
-    return False
+        for j in [x - 1, x, x + 1]:
+            if check_for_digit(j, i, grid):
+                bounds = get_boundrys(j, i, grid)
+                if not bounds in nums: 
+                    nums.append(bounds)
+                    
+    if len(nums) > 1:
+        ratio = 1 
+        for num in nums:
+            ratio *= int("".join(grid[num[0]][num[1] : num[2] + 1]))
+        return ratio
+        
+    return 0
 
 
 if __name__ == "__main__":
     grid = [[sym for sym in row if sym != "\n"] for row in open(filename)]
     total = 0
     for y in range(len(grid)):
-        x = 0 
-        while x < len(grid[y]):
-            if grid[y][x].isdigit():
-                left, right = get_boundrys(x, y, grid)
-                if boarder_contains_symbol(left, right, y, grid):
-                    total += int("".join(grid[y][left:right + 1]))
-                x = right + 1
-            else: 
-                x += 1
+        for x in range(len(grid[y])):
+            if grid[y][x] == "*":
+                total += get_gear_ratio(x, y, grid)
+            
     print(total)
