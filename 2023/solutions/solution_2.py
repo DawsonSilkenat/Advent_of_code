@@ -3,16 +3,6 @@ import os
 test_answer = 8
 filename = os.getcwd() + "/2023/inputs/" + "input_2.txt"
 
-def possible_subset(subset):
-    data = subset.split(",")
-    for result in data: 
-        count, color = result.split()
-        if int(count) > counts.get(color):
-            return False 
-        
-    return True
-    
-
 def get_game_score(game):
     _, games = game.split(":")
     
