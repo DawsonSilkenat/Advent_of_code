@@ -1,7 +1,5 @@
 import os
 
-counts = {"red" : 12, "green" : 13, "blue" : 14}
-
 test_answer = 8
 filename = os.getcwd() + "/2023/inputs/" + "input_2.txt"
 
@@ -16,13 +14,20 @@ def possible_subset(subset):
     
 
 def get_game_score(game):
-    game_id, games = game.split(":")
-    game_id = int(game_id.split()[1])
+    _, games = game.split(":")
     
+    min = {"red" : 0, "green" : 0, "blue" : 0}
     for subset in games.split(";"):
-        if not possible_subset(subset):
-            return 0
-    return game_id
+        for color_data in subset.split(","):
+            count, color = color_data.split()
+            count = int(count)
+            if min.get(color) < count:
+                min[color] = count
+    
+    prod = 1
+    for key in min.keys():
+        prod *= min[key]
+    return prod
 
 if __name__ == "__main__":
     total = 0
