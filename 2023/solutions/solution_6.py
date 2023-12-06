@@ -1,6 +1,6 @@
 import os
 
-test_answer = 288
+test_answer = 71503
 test_filename = os.getcwd() + "/2023/inputs/" + "test_input_6.txt"
 filename = os.getcwd() + "/2023/inputs/" + "input_6.txt"
 
@@ -19,15 +19,11 @@ def calculate_possible_solutions(time, distance):
 if __name__ == "__main__":
     test = False
     if test: 
-        times, distances = open(test_filename).read().split('\n')
+        time, distance = open(test_filename).read().split('\n')
     else:
-        times, distances = open(filename).read().split('\n')
+        time, distance = open(filename).read().split('\n')
     
-    times = map(int, times.split()[1:])  
-    distances = map(int, distances.split()[1:])
+    time = int("".join(time.split()[1:]))  
+    distance = int("".join(distance.split()[1:]))
     
-    product = 1
-    for t, d in zip(times, distances):
-        product *= calculate_possible_solutions(t, d)
-        
-    print(product)
+    print(calculate_possible_solutions(time, distance))
