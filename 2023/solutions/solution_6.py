@@ -1,6 +1,5 @@
 import os
-
-import timeit
+from math import ceil, floor
 
 test_answer = 71503
 test_filename = os.getcwd() + "/2023/inputs/" + "test_input_6.txt"
@@ -40,6 +39,19 @@ if __name__ == "__main__":
     time = int("".join(time.split()[1:]))  
     distance = int("".join(distance.split()[1:]))
     
-    print(faster_solution(time, distance))
+    # ax^2 + bx + c
+    # a = -1
+    # b = total_time
+    # c = - distance
+    
+    min_time =  ceil((time - (time * time - 4 * distance) ** 0.5) / 2)
+    max_time = floor((time + (time * time - 4 * distance) ** 0.5) / 2)
+    print(max_time - min_time + 1)
+    
+    
+    
+    
+    
+
     
     
