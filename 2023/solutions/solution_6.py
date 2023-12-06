@@ -1,11 +1,25 @@
 import os
 
+import timeit
+
 test_answer = 71503
 test_filename = os.getcwd() + "/2023/inputs/" + "test_input_6.txt"
 filename = os.getcwd() + "/2023/inputs/" + "input_6.txt"
 
 def calculate_distance(hold_time, total_time):
     return hold_time * (total_time - hold_time) 
+
+
+def faster_solution(time, distance):
+    t = 0 
+    while not calculate_distance(t, time) > distance:
+        t += 1
+    min_time = t
+    t = time
+    while not calculate_distance(t, time) > distance:
+        t -= 1
+    max_time = t
+    return max_time - min_time + 1
 
 
 def calculate_possible_solutions(time, distance):
@@ -26,4 +40,6 @@ if __name__ == "__main__":
     time = int("".join(time.split()[1:]))  
     distance = int("".join(distance.split()[1:]))
     
-    print(calculate_possible_solutions(time, distance))
+    print(faster_solution(time, distance))
+    
+    
