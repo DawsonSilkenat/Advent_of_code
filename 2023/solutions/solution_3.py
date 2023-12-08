@@ -9,7 +9,7 @@ def get_boundrys(x, y, grid):
         return None
 
     left = x
-    while left >= 0 and grid[y][left - 1].isdigit():
+    while left > 0 and grid[y][left - 1].isdigit():
         left -= 1
     right = x 
     while right < len(grid[y]) - 1 and grid[y][right + 1].isdigit():
