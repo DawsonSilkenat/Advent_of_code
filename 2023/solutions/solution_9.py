@@ -23,5 +23,9 @@ if __name__ == "__main__":
     else:
         file += "input_9.txt"
     
-    print(sum(map(get_next_value, [[int(v) for v in value.split()] for value in open(file).read().split("\n")])))
+    value_sequences = [[int(v) for v in value.split()] for value in open(file).read().split("\n")]
+    for seq in value_sequences:
+        seq.reverse()
+    
+    print(sum(map(get_next_value, value_sequences)))
     
