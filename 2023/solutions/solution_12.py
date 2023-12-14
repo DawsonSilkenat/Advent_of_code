@@ -1,8 +1,7 @@
 import os
 
 
-def calculate_arrangements(row, groups, group_index = 0, group_count = 0, i = 0):
-    
+def calculate_arrangements(row, groups):
     while i < len(row):
         if row[i] == "?":
             if group_index == len(groups) or group_count == groups[group_index]:
@@ -26,15 +25,17 @@ def calculate_arrangements(row, groups, group_index = 0, group_count = 0, i = 0)
         
         i += 1
     
-    
     if group_index == len(groups) or (group_index == len(groups) - 1 and group_count == groups[group_index]):
         return 1
     else:
         return 0
-    
+
+def unfold(row, groups):
+    return "?".join([row] * 5), groups * 5   
+
 
 if __name__ == "__main__":
-    test = False
+    test = False 
     file = os.getcwd() + "/2023/inputs/" 
     if test:
         file += "test_input_12.txt"
@@ -45,8 +46,12 @@ if __name__ == "__main__":
     
     count = 0
     for row, groups in document:
-        count += calculate_arrangements(row, groups)
+        count += calculate_arrangements(*unfold(row, groups))
         
     print(count)
+    
+    
+
+    
     
 
